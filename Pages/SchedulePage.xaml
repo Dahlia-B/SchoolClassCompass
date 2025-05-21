@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="SchoolClassCompass.Pages.SchedulePage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:pagemodels="clr-namespace:SchoolClassCompass.PageModels"
+             Title="Schedule">
+    <StackLayout Padding="10">
+        <Label Text="Your Schedule" FontSize="24" HorizontalOptions="Center" />
+        <CollectionView ItemsSource="{Binding ScheduleItems}" SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="pagemodels:ScheduleItemModel">
+                    <StackLayout Padding="5">
+                        <Label Text="{Binding Title}" FontSize="18" />
+                        <Label Text="{Binding Time}" FontSize="14" TextColor="Gray" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
