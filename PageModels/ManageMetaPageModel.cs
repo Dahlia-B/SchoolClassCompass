@@ -46,7 +46,7 @@ namespace SchoolClassCompass.PageModels
                 await _categoryRepository.SaveItemAsync(category);
             }
 
-            await (Shell.Current as AppShell)?.DisplayToastAsync("Some message");
+            await AppShell.DisplayToastAsync("...");
         }
 
         [RelayCommand]
@@ -54,7 +54,7 @@ namespace SchoolClassCompass.PageModels
         {
             Categories.Remove(category);
             await _categoryRepository.DeleteItemAsync(category);
-            await (Shell.Current as AppShell)?.DisplayToastAsync("Some message");
+            await AppShell.DisplayToastAsync("...");
         }
 
         [RelayCommand]
@@ -63,7 +63,7 @@ namespace SchoolClassCompass.PageModels
             var category = new Category();
             Categories.Add(category);
             await _categoryRepository.SaveItemAsync(category);
-            await (Shell.Current as AppShell)?.DisplayToastAsync("Some message");
+            await AppShell.DisplayToastAsync("...");
         }
 
         [RelayCommand]
@@ -74,7 +74,7 @@ namespace SchoolClassCompass.PageModels
                 await _tagRepository.SaveItemAsync(tag);
             }
 
-            await (Shell.Current as AppShell)?.DisplayToastAsync("Some message");
+            await AppShell.DisplayToastAsync("...");
         }
 
         [RelayCommand]
@@ -82,7 +82,7 @@ namespace SchoolClassCompass.PageModels
         {
             Tags.Remove(tag);
             await _tagRepository.DeleteItemAsync(tag);
-            await (Shell.Current as AppShell)?.DisplayToastAsync("Some message");
+            await AppShell.DisplayToastAsync("...");
         }
 
         [RelayCommand]
@@ -91,7 +91,7 @@ namespace SchoolClassCompass.PageModels
             var tag = new Tag();
             Tags.Add(tag);
             await _tagRepository.SaveItemAsync(tag);
-            await (Shell.Current as AppShell)?.DisplayToastAsync("Some message");
+            await AppShell.DisplayToastAsync("...");
         }
 
         [RelayCommand]

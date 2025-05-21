@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using SchoolClassCompass.Models;
+using SchoolClassCompass.Data;
 
 namespace SchoolClassCompass.Data
 {
@@ -13,7 +14,9 @@ namespace SchoolClassCompass.Data
         private readonly string _seedDataFilePath = "SeedData.json";
         private readonly ILogger<SeedDataService> _logger;
 
-        public SeedDataService(ProjectRepository projectRepository, TaskRepository taskRepository, TagRepository tagRepository, CategoryRepository categoryRepository, ILogger<SeedDataService> logger)
+        public SeedDataService(ProjectRepository projectRepository, TaskRepository taskRepository,
+            TagRepository tagRepository, CategoryRepository categoryRepository,
+            ILogger<SeedDataService> logger)
         {
             _projectRepository = projectRepository;
             _taskRepository = taskRepository;
@@ -24,7 +27,7 @@ namespace SchoolClassCompass.Data
 
         public async Task LoadSeedDataAsync()
         {
-            ClearTables();
+            await ClearTables();
 
             await using Stream templateStream = await FileSystem.OpenAppPackageFileAsync(_seedDataFilePath);
 
@@ -45,9 +48,7 @@ namespace SchoolClassCompass.Data
                     foreach (var project in payload.Projects)
                     {
                         if (project is null)
-                        {
                             continue;
-                        }
 
                         if (project.Category is not null)
                         {
@@ -59,10 +60,20 @@ namespace SchoolClassCompass.Data
 
                         if (project?.Tasks is not null)
                         {
-                            foreach (var task in project.Tasks)
+                            foreach (var projectTask in project.Tasks)
                             {
-                                task.ProjectID = project.ID;
-                                await _taskRepository.SaveItemAsync(task);
+                                projectTask.ProjectID = project.ID;
+
+                                var taskItem = new TaskItem
+                                {
+                                    Id = projectTask.Id,
+                                    Title = projectTask.Title,
+                                    Description = projectTask.Description,
+                                    IsCompleted = projectTask.IsCompleted,
+                                    ProjectID = projectTask.ProjectID
+                                };
+
+                                await _taskRepository.SaveItemAsync(taskItem);
                             }
                         }
 
@@ -83,7 +94,7 @@ namespace SchoolClassCompass.Data
             }
         }
 
-        private async void ClearTables()
+        private async Task ClearTables()
         {
             try
             {
@@ -95,7 +106,7 @@ namespace SchoolClassCompass.Data
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                _logger.LogError(e, "Error clearing tables");
             }
         }
     }

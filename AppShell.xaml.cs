@@ -12,10 +12,9 @@ namespace SchoolClassCompass
             InitializeComponent();
         }
 
-        // Method to display toast notifications
-        public async Task DisplayToastAsync(string message)
+        // Static method to display toast notifications from anywhere in the app
+        public static async Task DisplayToastAsync(string message)
         {
-            // Using CommunityToolkit.Maui for toast notifications
             var toast = Toast.Make(message, ToastDuration.Short, 14);
             await toast.Show();
         }

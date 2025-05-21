@@ -4,6 +4,10 @@
       "commandName": "Project",
       "nativeDebugging": true,
       "sqlDebugging": true
+    },
+    "WSL": {
+      "commandName": "WSL2",
+      "distributionName": ""
     }
   }
 }

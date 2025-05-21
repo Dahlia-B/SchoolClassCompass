@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:viewmodels="clr-namespace:SchoolClassCompass.PageModels"
+    x:Class="SchoolClassCompass.Pages.AdminSignupPage"
+    x:DataType="viewmodels:AdminSignupPageModel">
+
+    <ContentPage.BindingContext>
+        <viewmodels:AdminSignupPageModel />
+    </ContentPage.BindingContext>
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="10" Padding="20">
+            <Label Text="School Name:"/>
+            <Entry Text="{Binding SchoolName}" Placeholder="Enter school name" />
+
+            <Label Text="Add Classes:"/>
+            <HorizontalStackLayout>
+                <Entry x:Name="classEntry" Placeholder="Class name" WidthRequest="200"/>
+                <Button Text="Add" Command="{Binding AddClassCommand}" CommandParameter="{Binding Text, Source={x:Reference classEntry}}"/>
+            </HorizontalStackLayout>
+            <CollectionView ItemsSource="{Binding Classes}" HeightRequest="80">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Name}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Add Teachers:"/>
+            <HorizontalStackLayout>
+                <Entry x:Name="teacherEntry" Placeholder="Teacher name" WidthRequest="200"/>
+                <Button Text="Add" Command="{Binding AddTeacherCommand}" CommandParameter="{Binding Text, Source={x:Reference teacherEntry}}"/>
+            </HorizontalStackLayout>
+            <CollectionView ItemsSource="{Binding Teachers}" HeightRequest="80">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Name}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Add Students:"/>
+            <HorizontalStackLayout>
+                <Entry x:Name="studentEntry" Placeholder="Student name" WidthRequest="200"/>
+                <Button Text="Add" Command="{Binding AddStudentCommand}" CommandParameter="{Binding Text, Source={x:Reference studentEntry}}"/>
+            </HorizontalStackLayout>
+            <CollectionView ItemsSource="{Binding Students}" HeightRequest="80">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Name}" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Button Text="Complete Signup" Command="{Binding CompleteSignupCommand}" />
+            <Label Text="{Binding TempLoginsDisplay}" IsVisible="{Binding SignupComplete}" TextColor="Green"/>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
